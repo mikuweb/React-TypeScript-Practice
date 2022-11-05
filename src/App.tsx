@@ -1,10 +1,23 @@
+import axios from "axios";
+import { useState } from "react";
 import "./styles.css";
 
 export default function App() {
+  const [todos, setTodos] = useState<any>([]);
+
+  const onClickFetchData = () => {
+    axios.get("https://jsonplaceholder.typicode.com/todos").then((res) => {
+      setTodos(res.data);
+      console.log(res);
+    });
+  };
+
   return (
     <div className="App">
-      <h1>Hello CodeSandbox</h1>
-      <h2>Start editing to see some magic happen!</h2>
+      <button onClick={onClickFetchData}>Get Data</button>
+      {todos.map((todo) => (
+        <p>{todo.title}</p>
+      ))}
     </div>
   );
 }
